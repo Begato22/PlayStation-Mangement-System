@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   curved_navigation_bar: ^1.0.3
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -48,6 +49,12 @@ dev_dependencies:
   flutter_lints: ^1.0.0
   easy_splash_screen:
   google_fonts:
+  flutter_launcher_icons: ^0.9.3
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo/logo.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

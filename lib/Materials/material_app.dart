@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class MaterialPSApp {
   //Colors
-  static const Color backgroundColor = Color.fromARGB(255, 19, 2, 46);
-  static const Color basicColor = Colors.orange;
+  static const Color backgroundColor = Color.fromARGB(255, 43, 41, 46);
+  static const Color basicColor = Color.fromARGB(255, 61, 216, 200);
   static const Color whiteColor = Colors.white;
 
   //Logo Image
@@ -16,12 +16,8 @@ class MaterialPSApp {
   static const IconData playstationIcon = MyFlutterApp.playstation;
 
   //TextStyle
-  static TextStyle logoFontO = GoogleFonts.actor(
-      textStyle: TextStyle(
-          fontSize: 20,
-          color: MaterialPSApp.basicColor,
-          decoration: TextDecoration.none,
-          fontFamily: "Arial Rounded Bold"));
+  static TextStyle logoFontO =
+      GoogleFonts.titanOne(fontSize: 20, color: MaterialPSApp.basicColor);
   static const TextStyle titleFontO = TextStyle(
       fontSize: 20,
       color: MaterialPSApp.basicColor,

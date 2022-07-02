@@ -88,7 +88,9 @@ class _PageViewPSState extends State<PageViewPS> {
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/login-page');
+                  },
                   child: const Text(
                     "GET STARTED",
                     style: MaterialPSApp.buttonsFontW,

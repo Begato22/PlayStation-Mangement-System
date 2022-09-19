@@ -35,6 +35,17 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   curved_navigation_bar: ^1.0.3
+  flutter_bloc: ^8.1.1
+  bloc_provider: ^1.0.0
+  fluttertoast: ^8.0.9
+  shared_preferences: ^2.0.15
+  sqflite: ^2.0.2+1
+  intl: ^0.17.0
+  flutter_countdown_timer: ^4.1.0
+  flutter_local_notifications: ^9.9.0
+  font_awesome_flutter: ^10.1.0
+  syncfusion_flutter_charts: ^19.1.54
+
 
 
 dev_dependencies:
@@ -69,9 +80,14 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/logo/logo.png
+    - assets/bg.png
     - assets/unDraw/Having_fun.png
     - assets/unDraw/mobile_analytics.png
     - assets/unDraw/Schedule.png
+    - assets/dialogPic/clear.png
+    - assets/dialogPic/note.png
+    - assets/dialogPic/sleep.png
+    - assets/dialogPic/sure.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

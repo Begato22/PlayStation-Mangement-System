@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/MyFlutterApp.ttf
 ///
-/// 
+///
 /// * Font Awesome 5, Copyright (C) 2016 by Dave Gandy
 ///         Author:    Dave Gandy
 ///         License:   SIL (https://github.com/FortAwesome/Font-Awesome/blob/master/LICENSE.txt)
@@ -26,4 +26,5 @@ class MyFlutterApp {
   static const String? _kFontPkg = null;
 
   static const IconData playstation = IconData(0xf3df, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData controlHand = IconData(0xf3df, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:playstation/Materials/material_app.dart';
+import '../../shared/Materials/material_app.dart';
 
 class PageViewElement {
   final String title;

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:playstation/LogIn%20Page/login_page.dart';
-import 'package:playstation/Materials/material_app.dart';
+
 import 'package:easy_splash_screen/easy_splash_screen.dart';
+
+import '../../shared/Materials/material_app.dart';
+import '../login screen/login_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -13,12 +15,7 @@ class SplashScreen extends StatelessWidget {
         "assets/logo/logo.png",
         fit: BoxFit.cover,
       ),
-      logoSize: 100,
-      title: Text(
-        "Kazablanka PlayStation",
-        style: MaterialPSApp.logoFontO,
-        textAlign: TextAlign.center,
-      ),
+      logoSize: 110,
       backgroundColor: MaterialPSApp.backgroundColor,
       showLoader: true,
       loaderColor: MaterialPSApp.basicColor,
@@ -27,7 +24,7 @@ class SplashScreen extends StatelessWidget {
         style: MaterialPSApp.basicFontO,
       ),
       // navigator: const LogInPage(),
-      navigator: const LogInPage(),
+      navigator: LogInScreen(),
       durationInSeconds: 5,
     );
   }

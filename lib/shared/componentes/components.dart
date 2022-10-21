@@ -19,7 +19,9 @@ void navigateTo(context, Widget screen) => Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => screen),
     );
+
 enum ToastState { success, error, warning }
+
 Future<bool?> showToast(String message, ToastState state) async {
   print("inside inc");
   return await Fluttertoast.showToast(
@@ -61,25 +63,29 @@ Widget defultButton(
       width: double.infinity,
       margin: const EdgeInsets.only(top: 20),
       child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(
-              isDisabled ? Colors.grey : MaterialPSApp.basicColor),
-          overlayColor: MaterialStateProperty.all(
-              isDisabled ? Colors.black : MaterialPSApp.whiteColor),
-          enableFeedback: isDisabled,
-        ),
-        onPressed: () {
-          if (isDisabled) {
-            null;
-          } else {
-            onPressed();
-          }
-        },
-        child: Text(
-          label.toUpperCase(),
-          style: MaterialPSApp.buttonsFontW,
-        ),
-      ),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(
+                isDisabled ? Colors.grey : MaterialPSApp.basicColor),
+            overlayColor: MaterialStateProperty.all(
+                isDisabled ? Colors.black : MaterialPSApp.whiteColor),
+            enableFeedback: isDisabled,
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ))
+          ),
+          onPressed: () {
+            if (isDisabled) {
+              null;
+            } else {
+              onPressed();
+            }
+          },
+          child: Text(
+            label.toUpperCase(),
+            style: MaterialPSApp.buttonsFontW,
+          ),
+          ),
     );
 
 Widget roomCardButton(
@@ -95,7 +101,7 @@ Widget roomCardButton(
     margin: const EdgeInsets.only(top: 20),
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: isDisabled ? Colors.grey : MaterialPSApp.basicColor,
+        backgroundColor: isDisabled ? Colors.grey : MaterialPSApp.basicColor,
         enableFeedback: !isDisabled,
       ),
       onPressed: () {
@@ -258,7 +264,7 @@ void showDialogAlert({
           Image.asset(
             'assets/dialogPic/$url.png',
             height: 120,
-            width:url.contains('sleep')||url.contains('clear')? 120:80,
+            width: url.contains('sleep') || url.contains('clear') ? 120 : 80,
             fit: BoxFit.cover,
           ),
           const SizedBox(height: 5),

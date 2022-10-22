@@ -35,7 +35,14 @@ class RoomsPage extends StatelessWidget {
                           ? Center(
                               child: GestureDetector(
                                 onTap: () {
-                                  cubit.changeShowingBottomSheet();
+                                  // cubit.changeShowingBottomSheet();
+                                  showModalBottomSheet(
+                                    context: context,
+                                    elevation: 10,
+                                    builder: (context) {
+                                      return buildBottomSheetChild(context);
+                                    },
+                                  );
                                 },
                                 child: buildEmptyReplacmentScreen(
                                   lable: 'add new room',
@@ -58,15 +65,22 @@ class RoomsPage extends StatelessWidget {
               : Center(
                   child: GestureDetector(
                     onTap: () {
-                      cubit.changeShowingBottomSheet();
+                      // cubit.changeShowingBottomSheet();
+                      showModalBottomSheet(
+                        context: context,
+                        elevation: 10,
+                        builder: (context) {
+                          return buildBottomSheetChild(context);
+                        },
+                      );
                     },
                     child: buildEmptyReplacmentScreen(
                         lable: 'add new room', iconData: Icons.add, size: 100),
                   ),
                 ),
-          bottomSheet: cubit.showBottomSheet(
-            widget: buildBottomSheetChild(context),
-          ),
+          // bottomSheet: cubit.showBottomSheet(
+          //   widget: buildBottomSheetChild(context),
+          // ),
         );
       },
     );
@@ -385,126 +399,135 @@ class RoomsPage extends StatelessWidget {
     );
   }
 
-  Stack buildBottomSheetChild(context) {
-    var cubit = PlaystationHomeCubit.get(context);
+  Widget buildBottomSheetChild(context) {
+
     var size = MediaQuery.of(context).size;
-    return Stack(
-      alignment: Alignment.topCenter,
-      children: [
-        Container(
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            color: Color.fromRGBO(238, 238, 238, 1),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(50),
-              topRight: Radius.circular(50),
-            ),
-          ),
-          padding:
-              const EdgeInsets.only(left: 20, right: 20, top: 50, bottom: 20),
-          child: SingleChildScrollView(
-            child: Form(
-              key: formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  defultTextFeild(
-                    textEditingController: nameController,
-                    label: 'Enter Room Name',
-                    textInputType: TextInputType.name,
-                    prefix: Icons.meeting_room_outlined,
-                  ),
-                  const SizedBox(height: 10),
-                  defultTextFeild(
-                      textEditingController: hourPriceController,
-                      label: 'Enter price per hour',
-                      textInputType: TextInputType.number,
-                      prefix: Icons.attach_money),
-                  const SizedBox(height: 10),
-                  Row(
+    return BlocConsumer<PlaystationHomeCubit, PlaystationHomeStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = PlaystationHomeCubit.get(context);
+        return Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: Color.fromRGBO(238, 238, 238, 1),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
+                ),
+              ),
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, top: 50, bottom: 20),
+              child: SingleChildScrollView(
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text('Select your playstation:'),
-                      Radio(
-                        value: 1,
-                        groupValue: cubit.groupValue,
-                        onChanged: (value) {
-                          return cubit.changeRadioValue(value);
-                        },
+                      defultTextFeild(
+                        textEditingController: nameController,
+                        label: 'Enter Room Name',
+                        textInputType: TextInputType.name,
+                        prefix: Icons.meeting_room_outlined,
                       ),
-                      const Text('PS 4'),
-                      const Spacer(),
-                      Radio(
-                        value: 2,
-                        groupValue: cubit.groupValue,
-                        onChanged: (value) {
-                          return cubit.changeRadioValue(value);
-                        },
+                      const SizedBox(height: 10),
+                      defultTextFeild(
+                          textEditingController: hourPriceController,
+                          label: 'Enter price per hour',
+                          textInputType: TextInputType.number,
+                          prefix: Icons.attach_money),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          const Text('Select your playstation:'),
+                          Radio(
+                            value: 1,
+                            groupValue: cubit.groupValue,
+                            onChanged: (value) {
+                              return cubit.changeRadioValue(value);
+                            },
+                          ),
+                          const Text('PS 4'),
+                          const Spacer(),
+                          Radio(
+                            value: 2,
+                            groupValue: cubit.groupValue,
+                            onChanged: (value) {
+                              return cubit.changeRadioValue(value);
+                            },
+                          ),
+                          const Text('PS 5'),
+                          const SizedBox(width: 7),
+                        ],
                       ),
-                      const Text('PS 5'),
-                      const SizedBox(width: 7),
+                      defultButton(
+                        label: 'create room',
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            if (nameController.text.length > 6) {
+                              showToast('You should insert short name room',
+                                  ToastState.warning);
+                            } else if (equalsIgnoreCase(
+                                cubit.rooms, nameController.text)) {
+                              showToast(
+                                  '${nameController.text} is already exists.',
+                                  ToastState.error);
+                            } else {
+                              await cubit
+                                  .insertNewRoomIntoDatabase(
+                                name: nameController.text,
+                                roomType: cubit.groupValue == 1
+                                    ? 'Playstation 4'
+                                    : 'Playstation 5',
+                                hourPrice: int.parse(hourPriceController.text),
+                              )
+                                  .then(
+                                (value) {
+                                  print('done');
+                                  // cubit.changeShowingBottomSheet();
+                                  Navigator.of(context).pop();
+                                  nameController.text =
+                                      hourPriceController.text = '';
+                                  cubit.groupValue = 1;
+                                },
+                              );
+                            }
+                          }
+                        },
+                      )
                     ],
                   ),
-                  defultButton(
-                    label: 'create room',
-                    onPressed: () async {
-                      if (formKey.currentState!.validate()) {
-                        if (nameController.text.length > 6) {
-                          showToast('You should insert short name room',
-                              ToastState.warning);
-                        } else if (equalsIgnoreCase(
-                            cubit.rooms, nameController.text)) {
-                          showToast('${nameController.text} is already exists.',
-                              ToastState.error);
-                        } else {
-                          await cubit
-                              .insertNewRoomIntoDatabase(
-                            name: nameController.text,
-                            roomType: cubit.groupValue == 1
-                                ? 'Playstation 4'
-                                : 'Playstation 5',
-                            hourPrice: int.parse(hourPriceController.text),
-                          )
-                              .then(
-                            (value) {
-                              print('done');
-                              cubit.changeShowingBottomSheet();
-                              nameController.text =
-                                  hourPriceController.text = '';
-                              cubit.groupValue = 1;
-                            },
-                          );
-                        }
-                      }
-                    },
-                  )
-                ],
+                ),
               ),
             ),
-          ),
-        ),
-        Positioned(
-          top: 10,
-          right: 20,
-          child: GestureDetector(
-            onTap: () {
-              cubit.changeShowingBottomSheet();
-            },
-            child: Icon(Icons.cancel, color: Colors.grey[500]),
-          ),
-        ),
-        Positioned(
-          top: 8,
-          right: size.width / 2 - 50,
-          child: Container(
-            width: 100,
-            height: 3,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              color: Colors.grey,
+            Positioned(
+              top: 10,
+              right: 20,
+              child: GestureDetector(
+                onTap: () {
+                  // cubit.changeShowingBottomSheet();
+                  Navigator.of(context).pop();
+                },
+                child: Icon(Icons.cancel, color: Colors.grey[500]),
+              ),
             ),
-          ),
-        ),
-      ],
+            Positioned(
+              top: 8,
+              right: size.width / 2 - 50,
+              child: Container(
+                width: 100,
+                height: 3,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

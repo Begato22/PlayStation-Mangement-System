@@ -502,6 +502,7 @@ class RoomsPage extends StatelessWidget {
                 ),
               ),
             ),
+            //work for stackDeans
             Positioned(
               top: 10,
               right: 20,

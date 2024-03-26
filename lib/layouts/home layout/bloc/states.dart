@@ -49,5 +49,3 @@ class ClearHistory extends PlaystationHomeStates {}
 class CheckList extends PlaystationHomeStates {}
 
 class FinishTime extends PlaystationHomeStates {}
-
-class TestTime extends PlaystationHomeStates {}
